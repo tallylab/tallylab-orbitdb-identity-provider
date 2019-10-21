@@ -1,0 +1,39 @@
+{
+  "name": "tallylab-orbitdb-iam",
+  "version": "1.0.0",
+  "description": "TallyLab's OrbitDB plugins for Identity and Access Management",
+  "main": "index.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://bitbucket.org/tallylab/tallylab-orbitdb-iam.git"
+  },
+  "keywords": [
+    "OrbitDB",
+    "IAM",
+    "libp2p-crypto",
+    "nacl"
+  ],
+  "author": "Mark Henderson and Jordyn Bonds",
+  "license": "UNLICENSED",
+  "homepage": "https://bitbucket.org/tallylab/tallylab-orbitdb-iam#readme",
+  "dependencies": {
+    "libp2p-crypto": "^0.16.2",
+    "libp2p-crypto-secp256k1": "^0.4.0",
+    "orbit-db-access-controllers": "^0.2.3",
+    "orbit-db-identity-provider": "^0.2.0"
+  },
+  "standard": {
+    "env": "mocha"
+  },
+  "devDependencies": {
+    "ipfs": "^0.38.1",
+    "js-nacl": "^1.3.2",
+    "mocha": "^6.2.2",
+    "nodemon": "^1.19.4",
+    "orbit-db": "^0.22.0",
+    "rimraf": "^3.0.0"
+  }
+}
