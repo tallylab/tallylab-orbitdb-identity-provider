@@ -64,10 +64,32 @@ This package exposes four items:
 
 It is used in TallyLab similarly to the following:
 
-```
-const TallyLabIAM = require('tallylab-orbitdb-iam')
+```JavaScript
+nacl_factory.instantiate(async (nacl) => {
+  const IAM = new TallyLabIAM(nacl)
 
-const iam = TallyLabIAM.initialize()
+  const tlKeys = IAM.TallyLabIdentityProvider.keygen('thisisexactlythirtytwocharacters')
+
+  // Create an identity with the TallyLabIdentityProvider
+  const identity = await IAM.Identities.createIdentity({
+    type: 'TallyLab',
+    id: tlKeys.signing.signPk.toString(),
+    tlKeys,
+    nacl
+  })
+
+  const orbitdb = await OrbitDB.createInstance(ipfs, {
+    AccessControllers: IAM.AccessControllers,
+    identity: identity
+  })
+
+  const rootDb = await orbitdb.kvstore('root', {
+    accessController: {
+      type: 'tallylab',
+      write: [identity.id]
+    }
+  })
+})
 ```
 
 ## Background
@@ -94,15 +116,25 @@ compromised and should never be used for any users, ever.
 
 ## Contributing
 
-This repository contains a `Makefile` that provides useful commands for development and
-contributing.
+Development is streamlined through the `make watch` command which will watch files
+and generate documentation, lint, and run automated tests via the `nodemon` module.
+
+```
+$ git clone https://bitbucket.org/tallylab/tallylab-orbitdb-iam
+$ make build
+```
+
+The `Makefile` also provides other useful commands for development such as:
 
 ```bash
 $ make docs       # builds jsdoc for this repo with config in .jsdoc.config.js
-$ make watch      # watches js files and automatically runs tests and doc gen for development
+$ make link       # lints js files using standard.js
+$ make test       # runs automated tests once
+$ make clean      # nukes node_modules and package-lock.json
 $ make build      # builds browser files and stores them in /dist
-$ make rebuild    # deletes node_modules and package-json and re-installs dependencies
+$ make rebuild    # nukes node_modules and package-lock.json, and re-installs dependencies
 ```
+
 Since this repo is currently closed source, Issues and PRs are only open to contributors.
 
 ## Future Work

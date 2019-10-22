@@ -4,7 +4,10 @@
   "description": "TallyLab's OrbitDB plugins for Identity and Access Management",
   "main": "index.js",
   "scripts": {
-    "test": "make test"
+    "test": "make test",
+    "build": "make build",
+    "watch": "make watch",
+    "examples": "http-server examples"
   },
   "repository": {
     "type": "git",
@@ -32,6 +35,7 @@
     ]
   },
   "devDependencies": {
+    "http-server": "^0.11.1",
     "ipfs": "^0.38.1",
     "js-nacl": "^1.3.2",
     "jsdoc": "^3.6.3",
@@ -39,6 +43,8 @@
     "nodemon": "^1.19.4",
     "orbit-db": "^0.22.0",
     "rimraf": "^3.0.0",
-    "standard": "^14.3.1"
+    "standard": "^14.3.1",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9"
   }
 }

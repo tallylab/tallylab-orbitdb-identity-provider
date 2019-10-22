@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="./nacl_factory.js"></script>
+    <script src="./ipfs.min.js"></script>
+    <script src="./orbitdb.min.js"></script>
+    <script src="./tallylab-orbitdb-iam.min.js"></script>
+  </head>
+  <body>
+    <h2>The following code will run, open console to see the output</h2>
+
+    <script style="display: block; font-family: monospace; white-space: pre;">
+nacl_factory.instantiate(async (nacl) => {
+  const ipfs = await Ipfs.create()
+
+  const IAM = new TallyLabIAM(nacl)
+  console.log(IAM)
+
+  const tlKeys = IAM.TallyLabIdentityProvider.keygen('thisisexactlythirtytwocharacters')
+
+  console.log(tlKeys)
+
+  // Create an identity with the TallyLabIdentityProvider
+  const identity = await IAM.Identities.createIdentity({
+    type: 'TallyLab',
+    id: tlKeys.signing.signPk.toString(),
+    tlKeys,
+    nacl
+  })
+
+  console.log(identity)
+
+  const orbitdb = await OrbitDB.createInstance(ipfs, {
+    AccessControllers: IAM.AccessControllers,
+    identity: identity
+  })
+
+  const rootDb = await orbitdb.kvstore('root', {
+    accessController: {
+      type: 'tallylab',
+      write: [identity.id]
+    }
+  })
+
+  await rootDb.put('foo', 'bar')
+
+  console.log(rootDb.index)
+})
+    </script>
+  </body>
+</html>
