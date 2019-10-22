@@ -31,6 +31,7 @@
   "standard": {
     "env": "mocha",
     "ignore": [
+      "/examples",
       "/docs/"
     ]
   },
