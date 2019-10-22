@@ -54,6 +54,8 @@ The final files will then be available in the `dist/` folder:
 - `tallylab-orbitdb-iam.min.js` (minified)
 - `tallylab-orbitdb-iam.min.js.map` (Source map for development purposes)
 
+For a simple example, run `npm run example` and open your browser to the specified URL.
+
 ## Usage
 
 This package exposes four items:
