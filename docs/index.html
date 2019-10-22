@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1>tallylab-orbitdb-iam</h1>
+<blockquote>
+<p>TallyLab's OrbitDB plugins for Identity and Access Management</p>
+</blockquote>
+<p>Building distributed applications (dapps) without a centralized blockchain presents
+significant difficulties with regard to keypair management: Storage, recovery, etc. Keypair
+management, ulitimately, is a UX problem - a tradeoff between security and user convenience.</p>
+<p>Other approaches are effective but do not make it easy on the users:</p>
+<ul>
+<li>Exporting and importing highly randomized keys</li>
+<li>Deterministic keys based on a strong password or passphrase</li>
+</ul>
+<p>Both of the above approaches rely on one or both of the following:</p>
+<ul>
+<li>The user's own diligence in terms of saving their keys and recovering them, often utilizing
+a third party service such as Keybase or a password manager that supports keypairs.</li>
+<li>The user's memory, having to recall a password or passphrase. Often times these are forgotten
+or simply required to be stored in the same place as the keypair itself.</li>
+</ul>
+<p>To mitigate these issues, TallyLab opted to use a variant of the second approach, using a
+32 byte seed to generate keys via the nacl encryption library. However, in TL, the seed is
+generated from highly personal, memory-based questions, similar to security questions.
+Each question, while seemingly knowable, combines with the others to produce a set of
+questions that would be very difficult for anybody else besides the primary user to know.</p>
+<p>The answers are them summed together to create the 32 byte seed, and then passed into the
+TallyLab Identity Provider to allow the user to &quot;authenticate via memory&quot; in a reliable way.</p>
+<p>This package does <strong>not</strong> contain the aforementioned questions and instead handles everything
+post-generation of the seed. Mainly, the two primary classes, TallyLabAccessController and
+TallyLabIdentityProvider act as glue between TallyLab and the underlying OrbitDB infrastructure.</p>
+<h2>Table of Contents</h2>
+<ul>
+<li><a href="#install">Install</a></li>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#background">Background</a></li>
+<li><a href="#security">Security</a></li>
+<li><a href="#maintainers">Maintainers</a></li>
+<li><a href="#contributing">Contributing</a></li>
+<li><a href="#future-work">Future Work</a></li>
+<li><a href="#license">License</a></li>
+</ul>
+<h2>Install</h2>
+<p>The primary focus for this package is browser usage. To generate the browser libraries:</p>
+<pre class="prettyprint source"><code>$ git clone https://bitbucket.org/tallylab/tallylab-orbitdb-iam
+$ make build
+</code></pre>
+<p>The final files will then be available in the <code>dist/</code> folder:</p>
+<ul>
+<li><code>tallylab-orbitdb-iam.min.js</code> (minified)</li>
+<li><code>tallylab-orbitdb-iam.min.js.map</code> (Source map for development purposes)</li>
+</ul>
+<h2>Usage</h2>
+<p>This package exposes four items:</p>
+<ol>
+<li>TallyLabIdentityProvider</li>
+<li>TallyLabAccessProvider</li>
+<li>Identities (helper class from OrbitDB not normally exposed)</li>
+<li>AccessControllers (ditto the above)</li>
+</ol>
+<p>It is used in TallyLab similarly to the following:</p>
+<pre class="prettyprint source"><code>const TallyLabIAM = require('tallylab-orbitdb-iam')
+
+const iam = TallyLabIAM.initialize()
+</code></pre>
+<h2>Background</h2>
+<p>For a detailed explanation of how the system comes together to produce deterministic
+keypairs, please see this document:
+<a href="../examples/tutorials/Determinisitc_Addresses.md">Towards Deterministic OrbitDB Addresses</a>.</p>
+<h2>Security</h2>
+<p>In order to test functionality, the automated tests intentionally expose the private signing
+and encryption keys for the following seeds. Thus, these should be considered fully
+compromised and should never be used for any users, ever.</p>
+<ul>
+<li><code>thisisexactlythirtytwocharacters</code></li>
+<li><code>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</code></li>
+<li><code>yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy</code></li>
+<li><code>zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz</code></li>
+</ul>
+<h2>Maintainers</h2>
+<ul>
+<li><a href="https://github.com/aphelionz">@aphelionz</a></li>
+<li><a href="https://github.com/skybondsor">@skybondsor</a></li>
+</ul>
+<h2>Contributing</h2>
+<p>This repository contains a <code>Makefile</code> that provides useful commands for development and
+contributing.</p>
+<pre class="prettyprint source lang-bash"><code>$ make docs       # builds jsdoc for this repo with config in .jsdoc.config.js
+$ make watch      # watches js files and automatically runs tests and doc gen for development
+$ make build      # builds browser files and stores them in /dist
+$ make rebuild    # deletes node_modules and package-json and re-installs dependencies
+</code></pre>
+<p>Since this repo is currently closed source, Issues and PRs are only open to contributors.</p>
+<h2>Future Work</h2>
+<ul>
+<li>Consider rolling security questions into this module for greater encapsulation?</li>
+<li>Access granting and revocation to external keys using OrbitDB instead of IPFS</li>
+</ul>
+<h2>License</h2>
+<p>TBD © 2019 TallyLab, LLC</p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-TallyLabIAM.html">TallyLabIAM</a></li></ul><h3>Externals</h3><ul><li><a href="external-js-nacl.html">js-nacl</a></li><li><a href="external-orbit-db-access-controllers.html">orbit-db-access-controllers</a></li><li><a href="external-orbit-db-identity-provider.html">orbit-db-identity-provider</a></li></ul><h3>Classes</h3><ul><li><a href="TallyLabAccessController.html">TallyLabAccessController</a></li><li><a href="TallyLabIdentityProvider.html">TallyLabIdentityProvider</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Tue Oct 22 2019 11:33:32 GMT-0400 (GMT-04:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

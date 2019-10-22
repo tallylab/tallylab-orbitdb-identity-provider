@@ -37,6 +37,7 @@ TallyLabIdentityProvider act as glue between TallyLab and the underlying OrbitDB
 - [Security](#security)
 - [Maintainers](#maintainers)
 - [Contributing](#contributing)
+- [Future Work](#future-work)
 - [License](#license)
 
 ## Install
@@ -98,12 +99,16 @@ contributing.
 
 ```bash
 $ make docs       # builds jsdoc for this repo with config in .jsdoc.config.js
-$ make watch      # watches js files and automatically runs tests for development
+$ make watch      # watches js files and automatically runs tests and doc gen for development
 $ make build      # builds browser files and stores them in /dist
 $ make rebuild    # deletes node_modules and package-json and re-installs dependencies
 ```
-
 Since this repo is currently closed source, Issues and PRs are only open to contributors.
+
+## Future Work
+
+- Consider rolling security questions into this module for greater encapsulation?
+- Access granting and revocation to external keys using OrbitDB instead of IPFS
 
 ## License
 

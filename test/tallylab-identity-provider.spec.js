@@ -8,7 +8,7 @@ describe('Identity Provider', function () {
   before(async () => {
     iam = await new Promise((resolve, reject) => {
       naclFactory.instantiate((nacl) => {
-        iam = TallyLabIAM.instantiate(nacl)
+        iam = new TallyLabIAM(nacl)
         resolve(iam)
       })
     })

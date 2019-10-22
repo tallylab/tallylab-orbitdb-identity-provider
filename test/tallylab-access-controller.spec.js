@@ -15,7 +15,7 @@ describe('Access Controller', function () {
 
     iam = await new Promise((resolve, reject) => {
       naclFactory.instantiate((nacl) => {
-        iam = TallyLabIAM.instantiate(nacl)
+        iam = new TallyLabIAM(nacl)
         resolve(iam)
       })
     })
@@ -39,9 +39,12 @@ describe('Access Controller', function () {
     await identity.provider._signingKeystore.close()
     await orbitdb.disconnect()
     await ipfs.stop()
-    rmrf('./orbitdb', () => {})
-    rmrf('./orbitdb2', () => {})
-    rmrf('./randomkeys', () => {})
+
+    const logError = (err) => err && console.error(err)
+
+    rmrf('./orbitdb', logError)
+    rmrf('./orbitdb2', logError)
+    rmrf('./randomkeys', logError)
   })
 
   it('creates a deterministic OrbitDB address', async () => {
