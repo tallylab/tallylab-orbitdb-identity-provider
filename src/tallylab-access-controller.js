@@ -93,7 +93,7 @@ class TallyLabAccessController {
   async canAppend (entry, identityProvider) {
     const orbitIdentity = this._orbitdb.identity
     const entryIdentity = entry.identity
-    const verified = await TallyLabIdentityProvider.verifyIdentity(orbitIdentity)
+    const verified = await TallyLabIdentityProvider.verifyIdentity(entryIdentity)
 
     if (!verified) return false
     if (orbitIdentity.id !== entryIdentity.id) return false

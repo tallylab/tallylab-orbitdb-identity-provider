@@ -106,7 +106,7 @@ describe('Identity Provider', function () {
   it('exports identity in JSON.stringified format', async () => {
     const seed = 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz'
     const keypair = iam.TallyLabIdentityProvider.keygen(seed)
-    const stringified = keypair.toStringified()
+    const stringified = keypair.stringCompatible
 
     const expected = '{"privateKey":"96,54,154,245,68,207,207,165,161,136,232,31,222,227,91,238,175,121,140,226,34,61,252,166,31,197,116,37,96,54,244,176","publicKey":"36,203,195,127,249,160,217,199,142,25,152,27,181,197,155,56,70,168,12,80,42,45,246,117,242,77,134,3,208,106,117,86","signing":{"signPk":"186,66,69,142,131,186,121,38,186,139,143,62,154,185,202,175,15,28,73,24,221,168,197,81,8,79,122,235,16,101,183,75","signSk":"122,122,122,122,122,122,122,122,122,122,122,122,122,122,122,122,122,122,122,122,122,122,122,122,122,122,122,122,122,122,122,122,186,66,69,142,131,186,121,38,186,139,143,62,154,185,202,175,15,28,73,24,221,168,197,81,8,79,122,235,16,101,183,75"},"securityVersion":"2"}'
     assert.deepStrictEqual(JSON.stringify(stringified), expected)

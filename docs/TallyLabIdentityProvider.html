@@ -334,7 +334,7 @@ passed into OrbitDB. See Usage above.</p>
     
 
     
-    <h4 class="name" id=".keygen"><span class="type-signature">(static) </span>keygen<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".keygen"><span class="type-signature">(static) </span>keygen<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="TallyLabIdentityProvider.html#~TallyLabIdentity">TallyLabIdentityProvider~TallyLabIdentity</a>}</span></h4>
     
 
     
@@ -396,7 +396,7 @@ seeded keys.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_tallylab-identity-provider.js.html">src/tallylab-identity-provider.js</a>, <a href="src_tallylab-identity-provider.js.html#line110">line 110</a>
+        <a href="src_tallylab-identity-provider.js.html">src/tallylab-identity-provider.js</a>, <a href="src_tallylab-identity-provider.js.html#line122">line 122</a>
     </li></ul></dd>
     
 
@@ -425,10 +425,22 @@ seeded keys.</p>
 
         
 <div class="param-desc">
-    <p>A TallyLab identity object</p>
+    <p>See type definition below</p>
 </div>
 
 
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="TallyLabIdentityProvider.html#~TallyLabIdentity">TallyLabIdentityProvider~TallyLabIdentity</a></span>
+
+
+    </dd>
+</dl>
 
     
 
@@ -750,6 +762,274 @@ in the form of a string (publicKey + idSignature), which is then signed by TL</p
     
 
     
+        <h3 class="subsection-title">Type Definitions</h3>
+
+        
+                
+<h4 class="name" id="~TallyLabIdentity">TallyLabIdentity</h4>
+
+
+
+
+<div class="description">
+    <p>The TallyLab Identity Object returned from a successful Identities.createIdentity call</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>privateKey</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Uint8Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Encryption private key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>publicKey</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Uint8Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Encryption public key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>signing</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>signPk</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Uint8Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Signing public key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>signSk</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Uint8Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Signing private key</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>version</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>TallyLab security version (1.1 or 2.0)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="src_tallylab-identity-provider.js.html">src/tallylab-identity-provider.js</a>, <a href="src_tallylab-identity-provider.js.html#line95">line 95</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+            
+    
 
     
 </article>
@@ -768,7 +1048,7 @@ in the form of a string (publicKey + idSignature), which is then signed by TL</p
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Wed Oct 23 2019 16:18:14 GMT-0400 (GMT-04:00)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Wed Oct 23 2019 17:29:16 GMT-0400 (GMT-04:00)
 </footer>
 
 <script> prettyPrint(); </script>

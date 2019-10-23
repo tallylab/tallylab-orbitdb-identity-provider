@@ -93,6 +93,18 @@ class TallyLabIdentityProvider {
   }
 
   /**
+   * The TallyLab Identity Object returned from a successful Identities.createIdentity call
+   *
+   * @typedef {Object} TallyLabIdentityProvider~TallyLabIdentity
+   * @property {Uint8Array} privateKey Encryption private key
+   * @property {Uint8Array} publicKey Encryption public key
+   * @property {Object} signing
+   * @property {Uint8Array} signing.signPk Signing public key
+   * @property {Uint8Array} signing.signSk Signing private key
+   * @property {Number} version TallyLab security version (1.1 or 2.0)
+   */
+
+  /**
    * Generates four keys based on a seed string that is passed in from the security questions
    * flow. This functiion verfies that the seed length is exactly 32 bytes and will generate
    * a random seed if none is passed.
@@ -105,7 +117,7 @@ class TallyLabIdentityProvider {
    * Security versions have been set to **1.1** for a randomly generated key and **2.0** for
    * seeded keys.
    *
-   * @returns A TallyLab identity object
+   * @returns {...TallyLabIdentityProvider~TallyLabIdentity} See type definition below
    */
   static keygen (seed) {
     if (seed && seed.length !== 32) throw new Error('seed must be exactly 32 chars')
@@ -117,22 +129,27 @@ class TallyLabIdentityProvider {
     const encryptionKeys = this.prototype.nacl.crypto_box_seed_keypair(seedBytes)
     const signingKeys = this.prototype.nacl.crypto_sign_seed_keypair(seedBytes)
 
-    return {
-      privateKey: encryptionKeys.boxSk,
-      publicKey: encryptionKeys.boxPk,
-      signing: signingKeys,
-      securityVersion: version,
-      toStringified: () => ({
-        privateKey: encryptionKeys.boxSk.toString(),
-        publicKey: encryptionKeys.boxPk.toString(),
-        signing: {
-          signPk: signingKeys.signPk.toString(),
-          signSk: signingKeys.signSk.toString()
-        },
-        securityVersion: version.toString()
-      })
+    const Identity = function (encryptionKeys, signingKeys, version) {
+      this.privateKey = encryptionKeys.boxSk
+      this.publicKey = encryptionKeys.boxPk
+      this.signing = signingKeys
+      this.securityVersion = version
     }
-  } // keygen
+
+    Identity.prototype.stringCompatible = {
+      privateKey: encryptionKeys.boxSk.toString(),
+      publicKey: encryptionKeys.boxPk.toString(),
+      signing: {
+        signPk: signingKeys.signPk.toString(),
+        signSk: signingKeys.signSk.toString()
+      },
+      securityVersion: version.toString()
+    }
+
+    const identity = new Identity(encryptionKeys, signingKeys, version)
+
+    return identity
+  }
 }
 
 module.exports = TallyLabIdentityProvider
