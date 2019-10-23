@@ -17,7 +17,7 @@ lint:
 quicktest:
 	npx mocha
 
-test: deps
+test: lint deps
 	npx mocha
 
 build: lint deps docs test
@@ -27,6 +27,6 @@ build: lint deps docs test
 
 watch: deps
 	nodemon --watch index.js --watch README.md --watch src --watch test \
-		--exec "rm -rf docs; make docs; make lint; make quicktest"
+		--exec "rm -rf docs && make docs && make lint && make quicktest"
 
 rebuild: clean build

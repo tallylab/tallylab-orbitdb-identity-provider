@@ -46,7 +46,7 @@ The primary focus for this package is browser usage. To generate the browser lib
 
 ```
 $ git clone https://bitbucket.org/tallylab/tallylab-orbitdb-iam
-$ make build
+$ npm start
 ```
 
 The final files will then be available in the `dist/` folder:
@@ -76,8 +76,7 @@ nacl_factory.instantiate(async (nacl) => {
   const identity = await IAM.Identities.createIdentity({
     type: 'TallyLab',
     id: tlKeys.signing.signPk.toString(),
-    tlKeys,
-    nacl
+    tlKeys
   })
 
   const orbitdb = await OrbitDB.createInstance(ipfs, {
@@ -93,12 +92,6 @@ nacl_factory.instantiate(async (nacl) => {
   })
 })
 ```
-
-## Background
-
-For a detailed explanation of how the system comes together to produce deterministic
-keypairs, please see this document:
-[Towards Deterministic OrbitDB Addresses](../examples/tutorials/Determinisitc_Addresses.md).
 
 ## Security
 
