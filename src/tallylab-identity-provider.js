@@ -121,7 +121,16 @@ class TallyLabIdentityProvider {
       privateKey: encryptionKeys.boxSk,
       publicKey: encryptionKeys.boxPk,
       signing: signingKeys,
-      securityVersion: version
+      securityVersion: version,
+      toStringified: () => ({
+        privateKey: encryptionKeys.boxSk.toString(),
+        publicKey: encryptionKeys.boxPk.toString(),
+        signing: {
+          signPk: signingKeys.signPk.toString(),
+          signSk: signingKeys.signSk.toString()
+        },
+        securityVersion: version.toString()
+      })
     }
   } // keygen
 }
