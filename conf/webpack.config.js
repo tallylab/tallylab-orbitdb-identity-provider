@@ -6,8 +6,8 @@ module.exports = {
   target: 'web',
   output: {
     libraryTarget: 'var',
-    library: 'TallyLabIAM',
-    filename: 'tallylab-orbitdb-iam.min.js',
+    library: 'TallyLabIdentities',
+    filename: 'tallylab-orbitdb-identities.min.js',
     path: path.resolve('dist')
   }
 }

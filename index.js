@@ -1,10 +1,5 @@
 /**
- * @module TallyLabIAM
- */
-
-/**
- * @external orbit-db-access-controllers
- * @see https://github.com/orbitdb/orbit-db-access-controllers
+ * @module TallyLabIdentityProvider
  */
 
 /**
@@ -12,18 +7,7 @@
  * @see https://github.com/orbitdb/orbit-db-identity-provider/
  */
 
-/**
- * Note: We want to consider migration to the wasm-based
- * [libsodium.js](https://github.com/jedisct1/libsodium.js/)
- *
- * @external js-nacl
- * @see https://github.com/tonyg/js-nacl
- */
-
-const AccessControllers = require('orbit-db-access-controllers')
 const Identities = require('orbit-db-identity-provider')
-
-const TallyLabAccessController = require('./src/tallylab-access-controller')
 const TallyLabIdentityProvider = require('./src/tallylab-identity-provider')
 
 /**
@@ -44,30 +28,24 @@ const TallyLabIdentityProvider = require('./src/tallylab-identity-provider')
  *   iam = new TallyLabIAM(nacl)
  * })
  *
- * @param {external:js-nacl} nacl output of `nacl_factory.instantiate`
- *
- * @returns {IAM} See type definitions below
+ * @returns {TallyLabIdentities} See type definitions below
  */
-function TallyLabIAM (nacl) {
+function TallyLabIdentities (nacl) {
   TallyLabIdentityProvider.prototype.nacl = nacl
 
   Identities.addIdentityProvider(TallyLabIdentityProvider)
-  AccessControllers.addAccessController({ AccessController: TallyLabAccessController })
+  // AccessControllers.addAccessController({ AccessController: TallyLabAccessController })
 
   return {
-    TallyLabAccessController,
     TallyLabIdentityProvider,
-    Identities,
-    AccessControllers
+    Identities
   }
 }
 
 /**
- * @typedef {Object} IAM
- * @property {TallyLabAccessController} TallyLabAccessController - ACL Creation and Enforcement
+ * @typedef {Object} TallyLabIdentities
  * @property {TallyLabIdentityProvider} TallyLabIdentityProvider - Identity via NACL keypairs
  * @property {external:orbit-db-identity-provider} Identities - Identities helper class from Orbit
- * @property {external:orbit-db-access-controllers} AccessControllers - AccessControllers helper class from Orbit
  */
 
-module.exports = TallyLabIAM
+module.exports = TallyLabIdentities
