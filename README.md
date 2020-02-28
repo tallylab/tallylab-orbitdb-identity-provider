@@ -112,6 +112,8 @@ compromised and should never be used for any users, ever.
 
 ## Contributing
 
+Issues and PRs are welcome!
+
 Development is streamlined through the `make watch` command which will watch files
 and generate documentation, lint, and run automated tests via the `nodemon` module.
 
@@ -131,11 +133,8 @@ $ make build      # builds browser files and stores them in /dist
 $ make rebuild    # nukes node_modules and package-lock.json, and re-installs dependencies
 ```
 
-Since this repo is currently closed source, Issues and PRs are only open to contributors.
-
 ## Future Work
 
-- Consider rolling security questions into this module for greater encapsulation?
 - Access granting and revocation to external keys using OrbitDB instead of IPFS
 
 ## License
