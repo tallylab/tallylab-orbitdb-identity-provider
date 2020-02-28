@@ -1,6 +1,20 @@
-# tallylab-orbitdb-iam
+# TallyLab's OrbitDB Identity Provider (tallylab-orbitdb-identity-provider)
 
 > TallyLab's OrbitDB plugins for Identity and Access Management
+
+## Table of Contents
+
+- [Background](#background)
+- [Install](#install)
+- [Usage](#usage)
+- [Background](#background)
+- [Security](#security)
+- [Maintainers](#maintainers)
+- [Contributing](#contributing)
+- [Future Work](#future-work)
+- [License](#license)
+
+## Background
 
 Building distributed applications (dapps) without a centralized blockchain presents
 significant difficulties with regard to keypair management: Storage, recovery, etc. Keypair
@@ -29,40 +43,27 @@ This package does **not** contain the aforementioned questions and instead handl
 post-generation of the seed. Mainly, the two primary classes, TallyLabAccessController and
 TallyLabIdentityProvider act as glue between TallyLab and the underlying OrbitDB infrastructure.
 
-## Table of Contents
-
-- [Install](#install)
-- [Usage](#usage)
-- [Background](#background)
-- [Security](#security)
-- [Maintainers](#maintainers)
-- [Contributing](#contributing)
-- [Future Work](#future-work)
-- [License](#license)
-
 ## Install
 
 The primary focus for this package is browser usage. To generate the browser libraries:
 
 ```
-$ git clone https://bitbucket.org/tallylab/tallylab-orbitdb-iam
-$ npm start
+$ git clone https://github.com/tallylab/tallylab-orbitdb-identity-provider
+$ make build
 ```
 
 The final files will then be available in the `dist/` folder:
 
-- `tallylab-orbitdb-iam.min.js` (minified)
-- `tallylab-orbitdb-iam.min.js.map` (Source map for development purposes)
+- `tallylab-orbitdb-identity-provider.min.js` (minified)
+- `tallylab-orbitdb-identity-provider.min.js.map` (Source map for development purposes)
 
 For a simple example, run `npm run example` and open your browser to the specified URL.
 
 ## Usage
 
-This package exposes four items:
+This package exposes two items:
 1. TallyLabIdentityProvider
-2. TallyLabAccessProvider
-3. Identities (helper class from OrbitDB not normally exposed)
-4. AccessControllers (ditto the above)
+2. Identities (helper class from OrbitDB not normally exposed)
 
 It is used in TallyLab similarly to the following:
 
@@ -116,7 +117,7 @@ and generate documentation, lint, and run automated tests via the `nodemon` modu
 
 ```
 $ git clone https://bitbucket.org/tallylab/tallylab-orbitdb-iam
-$ make build
+$ make watch
 ```
 
 The `Makefile` also provides other useful commands for development such as:
