@@ -71,27 +71,15 @@ It is used in TallyLab similarly to the following:
 
 ```JavaScript
 nacl_factory.instantiate(async (nacl) => {
-  const IAM = new TallyLabIAM(nacl)
+  const tlIdentities = new TallyLabIdentities(nacl)
 
-  const tlKeys = IAM.TallyLabIdentityProvider.keygen('thisisexactlythirtytwocharacters')
+  const tlKeys = tlIdentities.TallyLabIdentityProvider.keygen('thisisexactlythirtytwocharacters')
 
   // Create an identity with the TallyLabIdentityProvider
-  const identity = await IAM.Identities.createIdentity({
+  const identity = await tlIdentities.Identities.createIdentity({
     type: 'TallyLab',
     id: tlKeys.signing.signPk.toString(),
     tlKeys
-  })
-
-  const orbitdb = await OrbitDB.createInstance(ipfs, {
-    AccessControllers: IAM.AccessControllers,
-    identity: identity
-  })
-
-  const rootDb = await orbitdb.kvstore('root', {
-    accessController: {
-      type: 'tallylab',
-      write: [identity.id]
-    }
   })
 })
 ```
