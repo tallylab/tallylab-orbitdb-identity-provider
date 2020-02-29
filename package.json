@@ -21,7 +21,7 @@
   ],
   "author": "Mark Henderson and Jordyn Bonds",
   "license": "MIT",
-  "homepage": "https://bitbucket.org/tallylab/tallylab-orbitdb-iam#readme",
+  "homepage": "https://tallylab.com",
   "dependencies": {
     "libp2p-crypto": "^0.16.2",
     "libp2p-crypto-secp256k1": "^0.4.0",
