@@ -67,20 +67,37 @@ This package exposes two items:
 1. TallyLabIdentityProvider
 2. Identities (helper class from OrbitDB not normally exposed)
 
-It is used in TallyLab similarly to the following:
+It is used in TallyLab, in the browser, similarly to the following. See it in action in the
+[examples](./examples):
 
 ```JavaScript
+// Requirements: js-nacl, orbit-db-keystore
+
 nacl_factory.instantiate(async (nacl) => {
-  const tlIdentities = new TallyLabIdentities(nacl)
+  const tlIdentities = new TallyLabIdentities()
+  console.log(tlIdentities)
 
-  const tlKeys = tlIdentities.TallyLabIdentityProvider.keygen('thisisexactlythirtytwocharacters')
+  const keystore = Keystore.create()
+  await keystore.open()
 
-  // Create an identity with the TallyLabIdentityProvider
+  // Generate keys, either with or without a seed
+  const seed = 'thisisexactlythirtytwocharacters'
+  const tlKeys = tlIdentities.TallyLabIdentityProvider.keygen(nacl, seed)
+  console.log(tlKeys)
+
+  // Pre-sign with the keystore
+  const id = tlKeys.signing.signPk.toString()
+  const key = await keystore.getKey(id) || await keystore.createKey(id)
+
+  // Identities work on the basis of cross-signing the OrbitDB and your provided keys
+  const idSignature = await keystore.sign(key, id)
+  const tlSignature = nacl.crypto_sign(idSignature, tlKeys.signing.signSk)
+
+  // Create an identity with the TallyLabIdentityProvider, and pass in the keystore
   const identity = await tlIdentities.Identities.createIdentity({
-    type: 'TallyLab',
-    id: tlKeys.signing.signPk.toString(),
-    tlKeys
+    type: 'TallyLab', id, tlSignature, keystore
   })
+  console.log(identity)
 })
 ```
 

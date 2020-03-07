@@ -2,49 +2,38 @@
 <html>
   <head>
     <script src="./nacl_factory.js"></script>
-    <script src="./ipfs.min.js"></script>
-    <script src="./orbitdb.min.js"></script>
-    <script src="./tallylab-orbitdb-iam.min.js"></script>
+    <script src="./orbit-db-keystore.min.js"></script>
+    <script src="./tallylab-orbitdb-identities.min.js"></script>
   </head>
   <body>
     <h2>The following code will run, open console to see the output</h2>
 
     <script style="display: block; font-family: monospace; white-space: pre;">
 nacl_factory.instantiate(async (nacl) => {
-  const ipfs = await Ipfs.create()
+  const tlIdentities = new TallyLabIdentities()
+  console.log(tlIdentities)
 
-  const IAM = new TallyLabIAM(nacl)
-  console.log(IAM)
+  const keystore = Keystore.create()
+  await keystore.open()
 
-  const tlKeys = IAM.TallyLabIdentityProvider.keygen('thisisexactlythirtytwocharacters')
-
+  // Generate keys, either with or without a seed
+  const seed = 'thisisexactlythirtytwocharacters'
+  const tlKeys = tlIdentities.TallyLabIdentityProvider.keygen(nacl, seed)
   console.log(tlKeys)
 
-  // Create an identity with the TallyLabIdentityProvider
-  const identity = await IAM.Identities.createIdentity({
-    type: 'TallyLab',
-    id: tlKeys.signing.signPk.toString(),
-    tlKeys,
-    nacl
-  })
+  // Pre-sign with the keystore
+  const id = tlKeys.signing.signPk.toString()
+  const key = await keystore.getKey(id) || await keystore.createKey(id)
 
+  // Identities work on the basis of cross-signing the OrbitDB and your provided keys
+  const idSignature = await keystore.sign(key, id)
+  const tlSignature = nacl.crypto_sign(idSignature, tlKeys.signing.signSk)
+
+  // Create an identity with the TallyLabIdentityProvider, and pass in the keystore
+  const identity = await tlIdentities.Identities.createIdentity({
+    type: 'TallyLab', id, tlSignature, keystore
+  })
   console.log(identity)
-
-  const orbitdb = await OrbitDB.createInstance(ipfs, {
-    AccessControllers: IAM.AccessControllers,
-    identity: identity
-  })
-
-  const rootDb = await orbitdb.kvstore('root', {
-    accessController: {
-      type: 'tallylab',
-      write: [identity.id]
-    }
-  })
-
-  await rootDb.put('foo', 'bar')
-
-  console.log(rootDb.index)
 })
     </script>
   </body>
