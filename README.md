@@ -56,8 +56,8 @@ $ make build
 
 The final files will then be available in the `dist/` folder:
 
-- `tallylab-orbitdb-identity-provider.min.js` (minified)
-- `tallylab-orbitdb-identity-provider.min.js.map` (Source map for development purposes)
+- `tallylab-orbitdb-identities.min.js` (minified)
+- `tallylab-orbitdb-identities.min.js.map` (Source map for development purposes)
 
 For a simple example, run `npm run example` and open your browser to the specified URL.
 
