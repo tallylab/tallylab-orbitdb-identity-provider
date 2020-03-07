@@ -99,6 +99,7 @@ describe('Identity Provider', function () {
     const identity = await identities.Identities.createIdentity({
       type: 'TallyLab',
       id: tlKeys.signing.signPk.toString(),
+      keystore,
       tlSignature
     })
 
@@ -117,6 +118,7 @@ describe('Identity Provider', function () {
     const identity = await identities.Identities.createIdentity({
       type: 'TallyLab',
       id: tlKeys.signing.signPk.toString(),
+      keystore,
       tlSignature
     })
 
