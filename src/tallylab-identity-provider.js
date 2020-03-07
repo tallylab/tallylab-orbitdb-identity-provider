@@ -16,25 +16,34 @@ require('libp2p-crypto-secp256k1')
  * ## Usage
  *
  * ```JavaScript
- * // This registers the TLIP with Orbit to let it know it's a valid provider
- * Identities.addIdentityProvider(TallyLabIdentityProvider)
- *
- * // nacl = our current cryptography library
+ * // Requirements: js-nacl, orbit-db-keystore
  * nacl_factory.instantiate(async (nacl) => {
+ *   const tlIdentities = new TallyLabIdentities()
+ *   console.log(tlIdentities)
  *
- *   // Same keygen function we're used to, in a different home
- *   const tlKeys = TallyLabIdentityProvider.keygen(nacl, 'thisisexactlythirtytwocharacters')
+ *   const keystore = Keystore.create()
+ *   await keystore.open()
  *
- *   // Creates a single user identity
- *   const identity = await Identities.createIdentity({
- *     type: 'TallyLab',
- *     id: tlKeys.signing.signPk.toString(),
- *     tlKeys,
- *     nacl
+ *   // Generate keys, either with or without a seed
+ *   const seed = 'thisisexactlythirtytwocharacters'
+ *   const tlKeys = tlIdentities.TallyLabIdentityProvider.keygen(nacl, seed)
+ *   console.log(tlKeys)
+ *
+ *   // Pre-sign with the keystore
+ *   const id = tlKeys.signing.signPk.toString()
+ *   const key = await keystore.getKey(id) || await keystore.createKey(id)
+ *
+ *   // Identities work on the basis of cross-signing the OrbitDB and your provided keys
+ *   const idSignature = await keystore.sign(key, id)
+ *   const tlSignature = nacl.crypto_sign(idSignature, tlKeys.signing.signSk)
+ *
+ *   // Create an identity with the TallyLabIdentityProvider, and pass in the keystore
+ *   const identity = await tlIdentities.Identities.createIdentity({
+ *     type: 'TallyLab', id, tlSignature, keystore
  *   })
+ *   console.log(identity)
  *
- *   // Utility function to verify the identity
- *   TallyLabIdentityProvider.verifyIdentity(nacl, identity)
+ *   TallyLabIdentityProvider.verifyIdentity(identity)
  * })
  * ```
  */
@@ -43,8 +52,8 @@ class TallyLabIdentityProvider {
    * Creates a new instance of TallyLabIdentityProvider. Not called directly but instead
    * passed into OrbitDB. See Usage above.
    *
-   * @param {Keypair} options.tlKeys TallyLab keys
-   * @param {module} options.nacl Output of `nacl_factory.instantiate`
+   * @param {String} options.id Stringified representation of the public signing key
+   * @param {String} options.idSignature Signature of OrbitDB public key signed by TL
    *
    * @returns TallyLabIdentityProvider
    */
@@ -64,9 +73,12 @@ class TallyLabIdentityProvider {
    *  After OrbitDB signs the TallyLab keys, it passed an identity back to TallyLab
    *  in the form of a string (publicKey + idSignature), which is then signed by TL
    *
+   *  Typically this happens inside the class but for security reasons the signature
+   *  is generated beforehand and passed on as `options.tlSignature`
+   *
    *  @returns {Uint8Array} Signature as bytes
    */
-  async signIdentity (identity, options) {
+  async signIdentity (_, options) {
     return options.tlSignature
   }
 

@@ -98,6 +98,8 @@ nacl_factory.instantiate(async (nacl) => {
     type: 'TallyLab', id, tlSignature, keystore
   })
   console.log(identity)
+
+  console.log(await tlIdentities.TallyLabIdentityProvider.verifyIdentity(identity))
 })
 ```
 

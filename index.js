@@ -11,12 +11,11 @@ const Identities = require('orbit-db-identity-provider')
 const TallyLabIdentityProvider = require('./src/tallylab-identity-provider')
 
 /**
- * This module exposes a single function as the entry point for TallyLabIAM. The function
- * takes a nacl instance (created via `nacl_factory.instantiate`) and returns an object containing
- * a {@link TallyLabIdentityProvider} object and a {@link TallyLabAccessController} object.
+ * This module exposes a single function as the entry point for TallyLabIdentities.
+ * The function returns an object containing a {@link TallyLabIdentityProvider} object.
  *
  * Additionally, since linking to Orbit requires both usage and configuration of the
- * Orbit-internal AccessController and Identities object, this function handles the linking
+ * Orbit-internal Identities object, this function handles the linking
  * and returns the aforementioned objects as well, in their modified state.
  *
  * @function TallyLabIAM
@@ -24,9 +23,7 @@ const TallyLabIdentityProvider = require('./src/tallylab-identity-provider')
  * @see https://github.com/orbitdb/orbit-db-identity-provider/#creating-an-identity
  *
  * @example
- * nacl_factory.instantiate((nacl) => {
- *   iam = new TallyLabIAM(nacl)
- * })
+ * const identities = new TallyLabIAM()
  *
  * @returns {TallyLabIdentities} See type definitions below
  */
