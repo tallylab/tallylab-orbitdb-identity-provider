@@ -30,11 +30,8 @@ const TallyLabIdentityProvider = require('./src/tallylab-identity-provider')
  *
  * @returns {TallyLabIdentities} See type definitions below
  */
-function TallyLabIdentities (nacl) {
-  TallyLabIdentityProvider.prototype.nacl = nacl
-
+function TallyLabIdentities () {
   Identities.addIdentityProvider(TallyLabIdentityProvider)
-  // AccessControllers.addAccessController({ AccessController: TallyLabAccessController })
 
   return {
     TallyLabIdentityProvider,

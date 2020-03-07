@@ -49,7 +49,8 @@ class TallyLabIdentityProvider {
    * @returns TallyLabIdentityProvider
    */
   constructor (options) {
-    this.tlKeys = options.tlKeys
+    this.id = options.id
+    this.idSignature = options.idSignature
   }
 
   /**
@@ -57,7 +58,7 @@ class TallyLabIdentityProvider {
    *
    * @returns {Uint8Array} TallyLab Signing Public Key
    */
-  getId () { return this.tlKeys.signing.signPk.toString() }
+  getId () { return this.id }
 
   /**
    *  After OrbitDB signs the TallyLab keys, it passed an identity back to TallyLab
@@ -66,7 +67,7 @@ class TallyLabIdentityProvider {
    *  @returns {Uint8Array} Signature as bytes
    */
   async signIdentity (identity, options) {
-    return this.nacl.crypto_sign(identity, this.tlKeys.signing.signSk)
+    return options.tlSignature
   }
 
   /**
@@ -119,15 +120,15 @@ class TallyLabIdentityProvider {
    *
    * @returns {...TallyLabIdentityProvider~TallyLabIdentity} See type definition below
    */
-  static keygen (seed) {
+  static keygen (nacl, seed) {
     if (seed && seed.length !== 32) throw new Error('seed must be exactly 32 chars')
     const toBytes = (string) => Uint8Array.from(string.split('').map(char => char.charCodeAt(0)))
 
-    const seedBytes = seed ? toBytes(seed) : this.prototype.nacl.random_bytes(32)
+    const seedBytes = seed ? toBytes(seed) : nacl.random_bytes(32)
     const version = seed ? 2.0 : 1.1
 
-    const encryptionKeys = this.prototype.nacl.crypto_box_seed_keypair(seedBytes)
-    const signingKeys = this.prototype.nacl.crypto_sign_seed_keypair(seedBytes)
+    const encryptionKeys = nacl.crypto_box_seed_keypair(seedBytes)
+    const signingKeys = nacl.crypto_sign_seed_keypair(seedBytes)
 
     const Identity = function (encryptionKeys, signingKeys, version) {
       this.privateKey = encryptionKeys.boxSk
