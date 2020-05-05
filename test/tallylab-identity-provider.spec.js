@@ -2,6 +2,7 @@ const assert = require('assert')
 const naclFactory = require('js-nacl')
 const TallyLabIdentities = require('../index')
 const Keystore = require('orbit-db-keystore')
+const CryptoJS = require('crypto-js')
 
 describe('Identity Provider', function () {
   let identities, nacl, keystore
@@ -19,6 +20,17 @@ describe('Identity Provider', function () {
 
   beforeEach(async () => {
     await keystore.open()
+  })
+
+  it('generates deterministic keys based on 32-byte seed buffers', () => {
+    const hash = CryptoJS.SHA256('basic hash stuff')
+    const buffer = Buffer.from(hash.toString(CryptoJS.enc.Hex), 'hex')
+    const keypair = identities.TallyLabIdentityProvider.keygen(nacl, buffer)
+    assert.strictEqual(keypair.publicKey.toString(), '155,55,155,10,129,198,200,248,2,0,81,67,104,97,191,84,4,67,150,61,94,186,42,149,251,120,255,25,91,150,240,93')
+    assert.strictEqual(keypair.privateKey.toString(), '254,119,190,228,223,230,7,141,12,34,173,64,20,107,139,100,207,255,54,68,162,94,82,98,62,188,57,43,25,64,184,33')
+    assert.strictEqual(keypair.signing.signPk.toString(), '87,1,206,167,246,127,189,13,82,161,206,195,207,53,231,253,158,159,50,200,182,159,238,193,7,23,49,116,9,20,159,87')
+    assert.strictEqual(keypair.signing.signSk.toString(), '149,243,179,125,21,137,231,210,120,8,174,6,148,234,21,98,155,205,123,115,57,88,63,164,45,14,205,23,245,69,200,116,87,1,206,167,246,127,189,13,82,161,206,195,207,53,231,253,158,159,50,200,182,159,238,193,7,23,49,116,9,20,159,87')
+    assert.strictEqual(keypair.securityVersion, 2.0)
   })
 
   it('generates deterministic keys based on 32-byte seed strings', () => {

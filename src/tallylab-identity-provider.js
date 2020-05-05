@@ -134,7 +134,16 @@ class TallyLabIdentityProvider {
    */
   static keygen (nacl, seed) {
     if (seed && seed.length !== 32) throw new Error('seed must be exactly 32 chars')
-    const toBytes = (string) => Uint8Array.from(string.split('').map(char => char.charCodeAt(0)))
+
+    const toBytes = (string) => {
+      let data = string
+
+      if (typeof data === 'string') {
+        data = string.split('').map(char => char.charCodeAt(0))
+      }
+
+      return Uint8Array.from(data)
+    }
 
     const seedBytes = seed ? toBytes(seed) : nacl.random_bytes(32)
     const version = seed ? 2.0 : 1.1
