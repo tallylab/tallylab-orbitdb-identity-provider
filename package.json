@@ -1,6 +1,6 @@
 {
   "name": "tallylab-orbitdb-identity-provider",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "TallyLab's OrbitDB plugins for Identity and Access Management",
   "main": "index.js",
   "scripts": {
