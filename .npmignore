@@ -1,0 +1,6 @@
+docs
+keystore
+dist
+examples
+test
+.jsdoc.config.js
