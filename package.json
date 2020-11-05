@@ -1,6 +1,6 @@
 {
   "name": "tallylab-orbitdb-identity-provider",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "TallyLab's OrbitDB plugins for Identity and Access Management",
   "main": "index.js",
   "scripts": {
@@ -26,7 +26,7 @@
     "libp2p-crypto": "^0.16.2",
     "libp2p-crypto-secp256k1": "^0.4.0",
     "orbit-db-access-controllers": "^0.2.3",
-    "orbit-db-identity-provider": "^0.2.0"
+    "orbit-db-identity-provider": "^0.3.1"
   },
   "standard": {
     "env": "mocha",
@@ -38,16 +38,16 @@
   "devDependencies": {
     "crypto-js": "^4.0.0",
     "http-server": "^0.11.1",
-    "ipfs": "^0.39.1",
+    "ipfs": "^0.48.1",
     "js-nacl": "^1.3.2",
     "jsdoc": "^3.6.3",
     "mocha": "^6.2.2",
     "nodemon": "^1.19.4",
-    "orbit-db": "^0.22.0",
+    "orbit-db": "^0.24.0",
     "orbit-db-keystore": "^0.3.4",
     "rimraf": "^3.0.0",
     "standard": "^14.3.1",
-    "tallylab-orbitdb-access-controller": "tallylab/tallylab-orbitdb-access-controller",
+    "tallylab-orbitdb-access-controller": "github:tallylab/tallylab-orbitdb-access-controller",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.9"
   }
